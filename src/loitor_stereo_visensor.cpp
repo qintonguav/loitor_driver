@@ -3,6 +3,7 @@
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include "sensor_msgs/Imu.h"
+#include <ros/package.h>
 
 #include <cv.h>
 #include <highgui.h>
@@ -97,10 +98,12 @@ void* imu_data_stream(void *)
 int main(int argc, char **argv)
 { 
 	/************************ Start Cameras ************************/
+	std::string pkg_path = ros::package::getPath("loitor_stereo_visensor");
+	string config_path = pkg_path + "/Loitor_VISensor_Setups.txt";
 	if(argv[1])
 		visensor_load_settings(argv[1]);
 	else 
-		visensor_load_settings("src/loitor_stereo_visensor/Loitor_VISensor_Setups.txt");
+		visensor_load_settings(config_path.c_str());
 
 	// 手动设置相机参数
 	//set_current_mode(5);
